@@ -113,8 +113,13 @@ class diamond::install {
     require => File['/etc/diamond'],
   }
 
-  $::diamond::collector_paths.each |$path| {
-    ensure_resource('exec', "create $path", { 'command' => "mkdir -p ${path}", 'creates' => $path })
+  $diamond::collector_paths.each |$path| {
+    ensure_resource('file', $path, {
+        'ensure' => 'directory',
+        'owner'  => 'root',
+        'group'  => 'root',
+        'mode'   => '0755',
+    })
   }
 
   if $diamond::librato_user and $diamond::librato_apikey {
