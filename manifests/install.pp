@@ -113,6 +113,14 @@ class diamond::install {
     require => File['/etc/diamond'],
   }
 
+  # need to precreate the parent of the collector_paths
+  file { ['/usr/local/share/diamond', '/usr/share/diamond']:
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
   $diamond::collector_paths.each |$path| {
     ensure_resource('file', $path, {
         'ensure' => 'directory',
