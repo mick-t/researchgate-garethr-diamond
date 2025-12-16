@@ -5,7 +5,7 @@
 #
 class diamond::install {
   if $diamond::install_from_pip {
-    case $::osfamily {
+    case  $facts['os']['family'] {
       'RedHat': {
         include epel
         ensure_resource('package', 'python-pip', { 'ensure' => 'present', 'before' => Package['diamond'], 'require' => Yumrepo['epel'] })
@@ -15,7 +15,7 @@ class diamond::install {
         ensure_packages(['python-pip','python-configobj','gcc','python-dev'], { 'ensure' => 'present' })
       }
       'Solaris': {
-        case $::kernelrelease {
+        case $facts['kernel'] {
           '5.11': {
             ensure_resource('package', ['pip','solarisstudio-122'], { 'ensure' => 'present', 'before' => Package['diamond'] })
             file { ['/ws', '/ws/on11update-tools', '/ws/on11update-tools/SUNWspro']: ensure => directory, }
@@ -39,7 +39,7 @@ class diamond::install {
       provider => pip,
     }
 
-    if $::osfamily == 'Solaris' {
+    if $facts['os']['family'] == 'Solaris' {
       # This should eventually go upstream
       file { '/lib/svc/method/diamond':
         source  => 'puppet:///modules/diamond/solaris/method/diamond',
