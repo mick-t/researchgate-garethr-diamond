@@ -59,7 +59,7 @@ class diamond::install {
       # this else might not be reach. add debug statement
       notify { "is diamond::service_provider being evaulated? ${diamond::service_provider}": }
       if $diamond::service_provider == 'upstart' {
-        notify { "diamond::service_provider == 'upstart'"}
+        notify { "diamond::service_provider == 'upstart'" }
         file { '/etc/init/diamond.conf':
           owner   => 'root',
           group   => 'root',
@@ -69,7 +69,7 @@ class diamond::install {
             target  => '/lib/init/upstart-job';
         }
       } elsif $diamond::service_provider == 'systemd' {
-        notify { "diamond::service_provider == 'systemd'"}
+        notify { "diamond::service_provider == 'systemd'" }
         file { '/etc/tmpfiles.d/diamond.conf':
           owner  => 'root',
           group  => 'root',
