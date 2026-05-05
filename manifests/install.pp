@@ -8,7 +8,7 @@ class diamond::install {
     case  $facts['os']['family'] {
       'RedHat': {
         # include epel
-        ensure_resource('package', 'python-pip', { 'ensure' => 'present', 'before' => Package['diamond'], 'require' => Yumrepo['epel'] })
+        # ensure_resource('package', 'python-pip', { 'ensure' => 'present', 'before' => Package['diamond'], 'require' => Yumrepo['epel'] })
         ensure_resource('package', ['python-configobj','gcc','python-devel'], { 'ensure' => 'present', 'before' => Package['diamond'], 'require' => Package['python-pip'] })
       }
       /^(Debian|Ubuntu)$/: {
